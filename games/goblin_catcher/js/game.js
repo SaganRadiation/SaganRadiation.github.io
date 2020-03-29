@@ -30,6 +30,7 @@ monsterImage.src = "images/monster.png"
 
 // Game objects
 var hero = {
+	speed: 256,
 	x: 0,
 	y: 0
 };
@@ -37,6 +38,17 @@ var monster = {
 	x: 0,
 	y: 0
 };
+
+// Hanle keyboard controls
+var keysDown = {};
+
+addEventListener("keydown", function (e){
+	keysDown[e.keyCode] = true;
+}, false);
+
+addEventListener("keyup", function(e) {
+	delete keysDown[e.keyCode];
+}, false);
 
 var render = function(){
   if (bgReady){
@@ -65,9 +77,30 @@ var reset = function() {
   monster.y = 32 + (Math.random() * (canvas.height - 64));
 };
 
+var update = function(modifier){
+	if (38 in keysDown){
+		hero.y -= hero.speed * modifier;
+	}
+	if (40 in keysDown){
+		hero.y += hero.speed * modifier;
+	}
+	if (37 in keysDown){
+		hero.x -= hero.speed * modifier;
+	}
+	if (39 in keysDown){
+		hero.x += hero.speed * modifier;
+	}
+}
+
 var main = function() {
+	var now = Date.now();
+	var delta = now - then;
+
+	update(delta / 1000);
 	render();
 
+	then = now;
+	
 	requestAnimationFrame(main);
 };
 
