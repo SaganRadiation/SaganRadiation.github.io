@@ -30,7 +30,7 @@ monsterImage.src = "images/monster.png"
 
 // Game objects
 var hero = {
-	speed: 256,
+	speed: 240,
 	x: 0,
 	y: 0
 };
