@@ -69,7 +69,7 @@ var render = function(){
   ctx.font = "24px Helvetica";
   ctx.textAlign = "left";
   ctx.textBaseline = "top"
-  ctx.fillText("Monsters caught: " + monsterCaught, 32, 32)
+  ctx.fillText("Monsters caught: " + monstersCaught, 32, 32)
 };
 
 // Cross-browser support for requestAnimationFrame
@@ -104,7 +104,7 @@ var update = function(modifier){
 		&& hero.y <= (monster.y + 32)
 		&& monster.y <= (hero.y + 32)
 	) {
-		++monstersCaught();
+		++monstersCaught;
 		reset();
 	}
 }
