@@ -90,6 +90,15 @@ var update = function(modifier){
 	if (39 in keysDown){
 		hero.x += hero.speed * modifier;
 	}
+
+	if (
+		hero.x <= monster.x + 32
+		&& monster.x <= (hero.x + 32)
+		&& hero.y <= (monster.y + 32)
+		&& monster.y <= (hero.y + 32)
+	) {
+		reset();
+	}
 }
 
 var main = function() {
@@ -100,7 +109,7 @@ var main = function() {
 	render();
 
 	then = now;
-	
+
 	requestAnimationFrame(main);
 };
 
