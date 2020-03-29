@@ -38,6 +38,7 @@ var monster = {
 	x: 0,
 	y: 0
 };
+var monstersCaught = 0;
 
 // Hanle keyboard controls
 var keysDown = {};
@@ -63,6 +64,12 @@ var render = function(){
   	ctx.drawImage(monsterImage, monster.x, monster.y);
   }
 
+  // Score
+  ctx.fillstyle = "rgb(250, 250, 250)";
+  ctx.font = "24px Helvetica";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top"
+  ctx.fillText("Monsters caught: " + monsterCaught, 32, 32)
 };
 
 // Cross-browser support for requestAnimationFrame
@@ -97,6 +104,7 @@ var update = function(modifier){
 		&& hero.y <= (monster.y + 32)
 		&& monster.y <= (hero.y + 32)
 	) {
+		++monstersCaught();
 		reset();
 	}
 }
