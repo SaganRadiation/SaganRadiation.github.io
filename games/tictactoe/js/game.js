@@ -13,10 +13,14 @@ document.body.appendChild(canvas);
 
 const SHAPE = {
   X: 'X',
-  O: 'O'
+  O: 'O',
+  E: 'EMPTY'
 };
 
 let current_player = SHAPE.X;
+let board = [[SHAPE.E, SHAPE.E, SHAPE.E],
+             [SHAPE.E, SHAPE.E, SHAPE.E],
+             [SHAPE.E, SHAPE.E, SHAPE.E]];
 
 let switchPlayer = function(){
   if (current_player == SHAPE.X){
@@ -30,7 +34,7 @@ let getMousePosition = function(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
   return {
     x: evt.clientX - rect.left,
-    y: event.clientY - rect.top
+    y: evt.clientY - rect.top
   }
 }
 
@@ -48,8 +52,20 @@ let getCell = function(x,y){
 }
 
 let validateCell = function(row, col){
-  return row>=0 && row <=2 && col >=0 && col <=2 ;
+  let cell_in_range = row>=0 && row <=2 && col >=0 && col <=2;
+  if (!cell_in_range){
+    return false;
+  }
+  if (board[row][col] != SHAPE.E){
+    return false;
+  }
+  return true;
 }
+
+let updateBoard = function(shape, row, col){
+  board[row][col] = shape;
+}
+
 let handleClick = function(x,y){
   if (!validateInput(x,y)){
     return;
@@ -58,6 +74,7 @@ let handleClick = function(x,y){
   if (!validateCell(cell.row, cell.col)){
     return;
   }
+  updateBoard(current_player, cell.row, cell.col);
   drawShapeAtCell(current_player, cell.row, cell.col);
   switchPlayer();
 }
