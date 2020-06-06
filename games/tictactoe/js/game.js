@@ -25,7 +25,8 @@ let drawShape = function(shape, x, y){
    ctx.moveTo(x-segment_length, y+segment_length);
    ctx.lineTo(x+segment_length, y-segment_length);   
   } else if (shape == SHAPE.O){
-    // TODO
+    ctx.beginPath();
+    ctx.arc(x,y,cell_size/2-cell_padding,0,2*Math.PI);
   }
   ctx.stroke();
 }
@@ -50,3 +51,4 @@ let drawBoard = function(){
 
 drawBoard();
 drawShape(SHAPE.X, 100, 150);
+drawShape(SHAPE.O, 200, 150);
