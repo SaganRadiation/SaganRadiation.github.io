@@ -33,7 +33,14 @@ let getMousePosition = function(canvas, evt) {
   }
 }
 
+let validateInput = function(x,y){
+  return x>=0 && x<=CANVAS_WIDTH && y>=0 && y<=CANVAS_HEIGHT;
+}
+
 let handleClick = function(x,y){
+  if (!validateInput(x,y)){
+    return;
+  }
   drawShape(current_player, x, y);
   switchPlayer();
 }
