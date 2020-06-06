@@ -46,8 +46,8 @@ let getCell = function(x,y){
   const board_x = x - WIDTH_PADDING;
   const board_y = y - HEIGHT_PADDING;
   return {
-    row: Math.floor(board_x / CELL_SIZE),
-    col: Math.floor(board_y / CELL_SIZE)
+    row: Math.floor(board_y / CELL_SIZE),
+    col: Math.floor(board_x / CELL_SIZE)
   }
 }
 
@@ -66,6 +66,34 @@ let updateBoard = function(shape, row, col){
   board[row][col] = shape;
 }
 
+let checkWinner = function(){
+  let winning_positions = [
+    // Horizontal rows.
+    [[0,0], [0,1], [0,2]],
+    [[1,0], [1,1], [1,2]],
+    [[2,0], [2,1], [2,2]],
+    // Vertical rows.
+    [[0,0], [1,0], [2,0]],
+    [[0,1], [1,1], [2,1]],
+    [[0,2], [1,2], [2,2]],
+    // Diagonal rows.
+    [[0,0], [1,1], [2,2]],
+    [[2,0], [1,1], [0,2]]
+  ];
+  for (var i = 0; i < winning_positions.length; i++){
+    pos = winning_positions[i];
+    if (board[pos[0][0]][pos[0][1]] == 
+        board[pos[1][0]][pos[1][1]] &&
+        board[pos[1][0]][pos[1][1]] ==
+        board[pos[2][0]][pos[2][1]]){
+      let shape = board[pos[0][0]][pos[0][1]];
+      if (shape == SHAPE.X || shape == SHAPE.O){
+        alert ('winner');
+      }
+    }
+  }
+}
+
 let handleClick = function(x,y){
   if (!validateInput(x,y)){
     return;
@@ -76,6 +104,7 @@ let handleClick = function(x,y){
   }
   updateBoard(current_player, cell.row, cell.col);
   drawShapeAtCell(current_player, cell.row, cell.col);
+  checkWinner();
   switchPlayer();
 }
 
@@ -85,8 +114,8 @@ document.addEventListener("click", function(event){
 })
 
 let drawShapeAtCell = function(shape, row, col){
-  let x = WIDTH_PADDING + CELL_SIZE*(1/2 + row);
-  let y = HEIGHT_PADDING + CELL_SIZE*(1/2 + col);
+  let x = WIDTH_PADDING + CELL_SIZE*(1/2 + col);
+  let y = HEIGHT_PADDING + CELL_SIZE*(1/2 + row);
   drawShape(shape, x, y);
 }
 
