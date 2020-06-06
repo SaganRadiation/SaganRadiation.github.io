@@ -10,9 +10,22 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 document.body.appendChild(canvas);
 
-let drawText = function(){
-  ctx.fillText("Wow HEIGHT_PADDING: " + HEIGHT_PADDING + 
-  	", WIDTH_PADDING: " + WIDTH_PADDING, 32, 32);
+let drawBoard = function(){
+  // Draws horizontal lines.
+  ctx.moveTo(WIDTH_PADDING, HEIGHT_PADDING + BOARD_SIZE*1/3)
+  ctx.lineTo(WIDTH_PADDING+BOARD_SIZE, HEIGHT_PADDING + BOARD_SIZE*1/3)
+
+  ctx.moveTo(WIDTH_PADDING, HEIGHT_PADDING + BOARD_SIZE*2/3)
+  ctx.lineTo(WIDTH_PADDING+BOARD_SIZE, HEIGHT_PADDING + BOARD_SIZE*2/3)
+
+  // Draws vertical lines.
+  ctx.moveTo(WIDTH_PADDING+BOARD_SIZE*1/3, HEIGHT_PADDING)
+  ctx.lineTo(WIDTH_PADDING+BOARD_SIZE*1/3, HEIGHT_PADDING + BOARD_SIZE)
+
+  ctx.moveTo(WIDTH_PADDING+BOARD_SIZE*2/3, HEIGHT_PADDING)
+  ctx.lineTo(WIDTH_PADDING+BOARD_SIZE*2/3, HEIGHT_PADDING + BOARD_SIZE)
+
+  ctx.stroke();
 };
 
-drawText();
+drawBoard();
