@@ -21,6 +21,8 @@ let current_player = SHAPE.X;
 let board = [[SHAPE.E, SHAPE.E, SHAPE.E],
              [SHAPE.E, SHAPE.E, SHAPE.E],
              [SHAPE.E, SHAPE.E, SHAPE.E]];
+let game_over = false;
+let special_debug = false;
 
 let switchPlayer = function(){
   if (current_player == SHAPE.X){
@@ -96,7 +98,7 @@ let checkWinner = function(){
 }
 
 let finishGame = function(winner){
-  let message = winner + " wins.";
+  let message = winner + " wins. Click anywhere to play again.";
   ctx.font= "24px Helvetica";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
@@ -104,10 +106,27 @@ let finishGame = function(winner){
   text_x = WIDTH_PADDING + BOARD_SIZE / 2;
   text_y = HEIGHT_PADDING + BOARD_SIZE + 10;
   ctx.fillText(message, text_x, text_y);
+  game_over = true;
+}
+
+let clearBoard = function(){
+  for (let row = 0; row < 3; row++){
+    for (let col= 0; col < 3; col++){
+      board[row][col] = SHAPE.E;
+    }
+  }
 }
 
 let handleClick = function(x,y){
   if (!validateInput(x,y)){
+    return;
+  }
+  if (game_over){
+    game_over = false;
+    special_debug = true;
+    clearBoard();
+    current_player = SHAPE.X;
+    drawBoard();
     return;
   }
   cell = getCell(x, y);
@@ -137,6 +156,7 @@ let drawShapeAtCell = function(shape, row, col){
 
 let drawShape = function(shape, x, y){
   const cell_padding = 20;
+  ctx.beginPath();
   if (shape == SHAPE.X){
    const segment_length = CELL_SIZE / 2 - cell_padding;
    ctx.moveTo(x-segment_length, y-segment_length);
@@ -144,7 +164,6 @@ let drawShape = function(shape, x, y){
    ctx.moveTo(x-segment_length, y+segment_length);
    ctx.lineTo(x+segment_length, y-segment_length);   
   } else if (shape == SHAPE.O){
-    ctx.beginPath();
     ctx.arc(x,y,CELL_SIZE/2-cell_padding,0,2*Math.PI);
   }
   ctx.stroke();
@@ -154,21 +173,20 @@ let drawBoard = function(){
   // Clear board
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  ctx.beginPath();
   // Draws horizontal lines.
   ctx.moveTo(WIDTH_PADDING, HEIGHT_PADDING + BOARD_SIZE*1/3)
   ctx.lineTo(WIDTH_PADDING+BOARD_SIZE, HEIGHT_PADDING + BOARD_SIZE*1/3)
-
   ctx.moveTo(WIDTH_PADDING, HEIGHT_PADDING + BOARD_SIZE*2/3)
   ctx.lineTo(WIDTH_PADDING+BOARD_SIZE, HEIGHT_PADDING + BOARD_SIZE*2/3)
 
   // Draws vertical lines.
   ctx.moveTo(WIDTH_PADDING+BOARD_SIZE*1/3, HEIGHT_PADDING)
   ctx.lineTo(WIDTH_PADDING+BOARD_SIZE*1/3, HEIGHT_PADDING + BOARD_SIZE)
-
   ctx.moveTo(WIDTH_PADDING+BOARD_SIZE*2/3, HEIGHT_PADDING)
   ctx.lineTo(WIDTH_PADDING+BOARD_SIZE*2/3, HEIGHT_PADDING + BOARD_SIZE)
-
   ctx.stroke();
 
   for (let row = 0; row < 3; row++){
