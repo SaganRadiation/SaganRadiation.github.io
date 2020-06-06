@@ -96,7 +96,7 @@ let checkWinner = function(){
 }
 
 let finishGame = function(winner){
-  let message = winner + " wins!";
+  let message = winner + " wins.";
   ctx.font= "24px Helvetica";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
@@ -115,7 +115,7 @@ let handleClick = function(x,y){
     return;
   }
   updateBoard(current_player, cell.row, cell.col);
-  drawShapeAtCell(current_player, cell.row, cell.col);
+  drawBoard();
   let winner = checkWinner();
   if (winner == SHAPE.X || winner == SHAPE.O){
     finishGame(winner);
@@ -151,6 +151,10 @@ let drawShape = function(shape, x, y){
 }
 
 let drawBoard = function(){
+  // Clear board
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   // Draws horizontal lines.
   ctx.moveTo(WIDTH_PADDING, HEIGHT_PADDING + BOARD_SIZE*1/3)
   ctx.lineTo(WIDTH_PADDING+BOARD_SIZE, HEIGHT_PADDING + BOARD_SIZE*1/3)
@@ -166,6 +170,15 @@ let drawBoard = function(){
   ctx.lineTo(WIDTH_PADDING+BOARD_SIZE*2/3, HEIGHT_PADDING + BOARD_SIZE)
 
   ctx.stroke();
+
+  for (let row = 0; row < 3; row++){
+    for (let col=0; col < 3; col++){
+      let shape = board[row][col];
+      if (shape == SHAPE.X || shape == SHAPE.O){
+        drawShapeAtCell(shape, row, col);
+      }
+    }
+  }
 };
 
 drawBoard();
