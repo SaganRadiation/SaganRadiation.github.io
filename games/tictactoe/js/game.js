@@ -17,6 +17,14 @@ const SHAPE = {
   E: 'EMPTY'
 };
 
+const WINNER = {
+  X: 'X',
+  O: 'O',
+  TIE: 'TIE',
+  NONE: 'NONE'
+};
+
+
 let current_player = SHAPE.X;
 let board = [[SHAPE.E, SHAPE.E, SHAPE.E],
              [SHAPE.E, SHAPE.E, SHAPE.E],
@@ -68,6 +76,17 @@ let updateBoard = function(shape, row, col){
   board[row][col] = shape;
 }
 
+let boardFull = function(){
+  for (let row = 0; row < 3; row++){
+    for (let col=0; col < 3; col++){
+      if (board[row][col] == SHAPE.E){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 let checkWinner = function(){
   let winning_positions = [
     // Horizontal rows.
@@ -89,16 +108,29 @@ let checkWinner = function(){
         board[pos[1][0]][pos[1][1]] ==
         board[pos[2][0]][pos[2][1]]){
       let shape = board[pos[0][0]][pos[0][1]];
-      if (shape == SHAPE.X || shape == SHAPE.O){
-        return shape;
+      if (shape == SHAPE.X){
+        return WINNER.X;
+      } else if (shape == SHAPE.O){
+        return WINNER.O;
       }
     }
   }
-  return false;
+  if (boardFull()){
+    return WINNER.TIE;
+  }
+  return WINNER.NONE;
 }
 
 let finishGame = function(winner){
-  let message = winner + " wins. Click anywhere to play again.";
+  let message = "";
+  if (winner == WINNER.X || winner == WINNER.O){
+    message = winner + " wins.";
+  } else if (winner == WINNER.TIE){
+    message = "Cat's game.";
+  } else {
+    message = "ERROR!!";
+  }
+  message += " Click anywhere to play again.";
   ctx.font= "24px Helvetica";
   ctx.fillStyle = "black";
   ctx.textAlign = "center";
@@ -136,7 +168,7 @@ let handleClick = function(x,y){
   updateBoard(current_player, cell.row, cell.col);
   drawBoard();
   let winner = checkWinner();
-  if (winner == SHAPE.X || winner == SHAPE.O){
+  if (winner != WINNER.NONE){
     finishGame(winner);
   } else{
     switchPlayer();
