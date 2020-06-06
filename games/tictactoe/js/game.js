@@ -4,5 +4,6 @@ canvas.width = 512;
 canvas.height = 480;
 document.body.appendChild(canvas);
 
-ctx.fillStyle = 'blue';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.moveTo(10,10);
+ctx.lineTo(200,100);
+ctx.stroke();
