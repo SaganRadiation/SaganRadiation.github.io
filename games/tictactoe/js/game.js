@@ -10,6 +10,26 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 document.body.appendChild(canvas);
 
+const SHAPE = {
+  X: 'X',
+  O: 'O'
+};
+
+let drawShape = function(shape, x, y){
+  const cell_padding = 20;
+  const cell_size = BOARD_SIZE / 3;
+  if (shape == SHAPE.X){
+   const segment_length = cell_size / 2 - cell_padding;
+   ctx.moveTo(x-segment_length, y-segment_length);
+   ctx.lineTo(x+segment_length, y+segment_length);
+   ctx.moveTo(x-segment_length, y+segment_length);
+   ctx.lineTo(x+segment_length, y-segment_length);   
+  } else if (shape == SHAPE.O){
+    // TODO
+  }
+  ctx.stroke();
+}
+
 let drawBoard = function(){
   // Draws horizontal lines.
   ctx.moveTo(WIDTH_PADDING, HEIGHT_PADDING + BOARD_SIZE*1/3)
@@ -29,3 +49,4 @@ let drawBoard = function(){
 };
 
 drawBoard();
+drawShape(SHAPE.X, 100, 150);
