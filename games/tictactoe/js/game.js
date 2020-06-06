@@ -88,10 +88,11 @@ let checkWinner = function(){
         board[pos[2][0]][pos[2][1]]){
       let shape = board[pos[0][0]][pos[0][1]];
       if (shape == SHAPE.X || shape == SHAPE.O){
-        alert ('winner');
+        return shape;
       }
     }
   }
+  return false;
 }
 
 let handleClick = function(x,y){
@@ -104,7 +105,10 @@ let handleClick = function(x,y){
   }
   updateBoard(current_player, cell.row, cell.col);
   drawShapeAtCell(current_player, cell.row, cell.col);
-  checkWinner();
+  let winner = checkWinner();
+  if (winner == SHAPE.X || winner == SHAPE.O){
+    alert(winner + " wins!");
+  }
   switchPlayer();
 }
 
