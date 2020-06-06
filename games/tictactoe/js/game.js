@@ -10,4 +10,8 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 document.body.appendChild(canvas);
 
-ctx.fillText("HEIGHT_PADDING: " + HEIGHT_PADDING + ", WIDTH_PADDING: " + WIDTH_PADDING, 32, 32);
+let drawText = function(){
+  ctx.fillText("The HEIGHT_PADDING: " + HEIGHT_PADDING + ", WIDTH_PADDING: " + WIDTH_PADDING, 32, 32);
+};
+
+drawText();
