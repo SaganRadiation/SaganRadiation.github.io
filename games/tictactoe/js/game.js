@@ -15,6 +15,34 @@ const SHAPE = {
   O: 'O'
 };
 
+let current_player = SHAPE.X;
+
+let switchPlayer = function(){
+  if (current_player == SHAPE.X){
+    current_player = SHAPE.O;
+  } else {
+    current_player = SHAPE.X;
+  }
+}
+
+let getMousePosition = function(canvas, evt) {
+  let rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: event.clientY - rect.top
+  }
+}
+
+let handleClick = function(x,y){
+  drawShape(current_player, x, y);
+  switchPlayer();
+}
+
+document.addEventListener("click", function(event){
+  var mousePosition = getMousePosition(canvas, event);
+  handleClick(mousePosition.x, mousePosition.y);
+})
+
 let drawShape = function(shape, x, y){
   const cell_padding = 20;
   const cell_size = BOARD_SIZE / 3;
@@ -50,5 +78,3 @@ let drawBoard = function(){
 };
 
 drawBoard();
-drawShape(SHAPE.X, 100, 150);
-drawShape(SHAPE.O, 200, 150);
