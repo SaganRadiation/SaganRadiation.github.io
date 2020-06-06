@@ -95,6 +95,17 @@ let checkWinner = function(){
   return false;
 }
 
+let finishGame = function(winner){
+  let message = winner + " wins!";
+  ctx.font= "24px Helvetica";
+  ctx.fillStyle = "black";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  text_x = WIDTH_PADDING + BOARD_SIZE / 2;
+  text_y = HEIGHT_PADDING + BOARD_SIZE + 10;
+  ctx.fillText(message, text_x, text_y);
+}
+
 let handleClick = function(x,y){
   if (!validateInput(x,y)){
     return;
@@ -107,9 +118,10 @@ let handleClick = function(x,y){
   drawShapeAtCell(current_player, cell.row, cell.col);
   let winner = checkWinner();
   if (winner == SHAPE.X || winner == SHAPE.O){
-    alert(winner + " wins!");
+    finishGame(winner);
+  } else{
+    switchPlayer();
   }
-  switchPlayer();
 }
 
 document.addEventListener("click", function(event){
