@@ -11,7 +11,8 @@ canvas.height = CANVAS_HEIGHT;
 document.body.appendChild(canvas);
 
 let drawText = function(){
-  ctx.fillText("The HEIGHT_PADDING: " + HEIGHT_PADDING + ", WIDTH_PADDING: " + WIDTH_PADDING, 32, 32);
+  ctx.fillText("Wow HEIGHT_PADDING: " + HEIGHT_PADDING + 
+  	", WIDTH_PADDING: " + WIDTH_PADDING, 32, 32);
 };
 
 drawText();
