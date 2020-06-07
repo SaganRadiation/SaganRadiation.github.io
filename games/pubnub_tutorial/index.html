@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.28.0.min.js"></script>
+<script src="https://cdn.pubnub.com/pubnub-3.16.5.js"></script>
 
 <script type="text/javascript">
 
@@ -9,7 +9,7 @@
   var $output = $('chat-output');
 
 
-  var PUBNUB_demo = new PubNub({
+  var PUBNUB_demo = PUBNUB.init({
     publishKey: 'pub-c-663af6fe-2f89-4110-9fa4-99da44028c57',
     subscribeKey: 'sub-c-92b98078-a8c6-11ea-9d71-da51a68c7938'
   });
